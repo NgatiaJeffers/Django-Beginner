@@ -12,6 +12,11 @@
             <div class="navbar-header">
                 <a class="navbar-brand text-white" href="{% url 'newsToday' %}">The Moringa Trinbune</a>
             </div>
+            <form class="form-inline" role="search" action="{% url 'search_results' %}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Article" name="article" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
         </div>
     </navbar>
 </body>
