@@ -11,12 +11,18 @@
         <div class="col-md-6">
             <h2 class="breadcrumb text-class shadow-lg bg-white">{{ news_item.title }}</h2>
         </div>
+
+        <!-- Display news Articles Image -->
+        <div class="col-md-6">
+            <img src="{{ news_item.article_image.url }}" class="img-responsive" alt="Code">
+        </div>
     </div>
     {% empty %}
     <div class="row">
-        <h2 class="text-center">There Is No News Items</h2>
+        <h2 class="breadcrumb text-class shadow-lg bg-white">There Is No News Items</h2>
     </div>
     {% endfor %}
 </div>
+
 
 {% endblock %}
