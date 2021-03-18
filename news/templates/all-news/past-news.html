@@ -2,4 +2,21 @@
 
 {% block content %}
 {{ block.super }}
+
+<div class="container">
+    <!-- Looping through news -->
+    {% for news_item in news %}
+    <div class="row">
+        <!-- Displayng news articles -->
+        <div class="col-md-6">
+            <h2 class="text-center">{{ news_item.title }}</h2>
+        </div>
+    </div>
+    {% empty %}
+    <div class="row">
+        <h2 class="text-center">There Is No News Items</h2>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

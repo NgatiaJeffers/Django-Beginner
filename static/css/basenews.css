@@ -10,6 +10,23 @@ body {
     color: #31383F;
 }
 
+.navbar {
+    background-color: #fff !important;
+    color: #31383F;
+}
+
+.navbar-brand {
+    color: #DD8EA4;
+}
+
 h1 {
     color: #DD8EA4;
+}
+
+.breadcrumb {
+    padding: 15px;
+    font-size: 15px;
+    color: #fff !important;
+    letter-spacing: 1px;
+    border-radius: 8px !important
 }

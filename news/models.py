@@ -26,3 +26,8 @@ class Article(models.Model):
     editor = models.ForeignKey(Editor, on_delete = models.CASCADE,)
     tags = models.ManyToManyField(tags)
     pub_date = models.DateTimeField(auto_now_add = True)
+
+    @classmethod
+    def days_news(cls, date):
+        news = cls.objects.filter(pub_date_date = date)
+        return news

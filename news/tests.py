@@ -22,6 +22,7 @@ class EditorTestCase(TestCase):
 class ArticleTestCase(TestCase):
 
     def setUp(self):
+        # Creating a new editor snd saving it
         self.dev = Editor(first_name = 'Dev', last_name = 'Gakuya', email = 'devgakuya@gmail.com')
         self.dev.save_editor()
 
@@ -29,20 +30,24 @@ class ArticleTestCase(TestCase):
         self.new_tag = tags(name = 'testing')
         self.new_tag.save()
 
+        # Creatitng a new article
         self.new_article = Article(title = 'Tech World', post = 'Talk is cheap show me the code', editor = self.dev)
         self.new_article.save()
 
         self.new_article.tags.add(self.new_tag)
 
+        # Deleting all instances
         def tearDown(self):
             Editor.objects.all().delete()
             tags.objects.all().delete()
             Article.objects.all().delete()
 
+        # Creating a test for the days article
         def test_get_news_today(self):
             today_news = Article.todays_news()
             self.assertTrue(len(today_news) > 0)
 
+        # Geting the days date
         def test_get_news_by_date(self):
             test_date = '2021-03-16'
             date = dt.datetime.strptime(test_date, '%Y-%m-%d').date()
