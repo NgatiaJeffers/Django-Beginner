@@ -9,8 +9,9 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 # Create your views here.
 def news_of_day(request):
     date = dt.date.today()
+    articles = Article.objects.all().order_by('-pub_date')
     
-    return render(request, "all-news/today-news.html", {"date": date})
+    return render(request, "all-news/today-news.html", {"date": date, "news": articles})
 
 def past_days_news(request, past_date):
 
@@ -33,19 +34,21 @@ def news_today(request):
     date = dt.date.today()
     news = Article.todays_news()
     if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
+        form = NewsLetterForm(data=request.POST)
         if form.is_valid():
             print('valid')
-            name = form.cleaned_date['your_name']
+            name = form.cleaned_date['name']
             email = form.cleaned_date['email']
             recipient = NewsLetter(name = name, email = email)
             recipient.save()
             send_welcome_email(name, email)
 
             HttpResponseRedirect('news_today')
+        else:
+            print('Error loading the data!')
     else:
         form = NewsLetterForm()
-    return render(request, 'all-news/today-news.html', {"date": date, "news": news, "letterForm": form})
+    return render(request, 'all-news/today-news.html', {"date": date, "news": news, "form": form})
 
 def search_results(request):
     if 'article' in request.GET and request.GET["article"]:

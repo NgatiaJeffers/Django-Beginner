@@ -11,5 +11,5 @@ def send_welcome_email(name, receiver):
     html_content = render_to_string('email/newsemail.htlm', {"name": name})
 
     msg = EmailMultiAlternatives(subject, text_content, sender, [receiver])
-    msg.attach_alternative(html_contentm,'text/html')
+    msg.attach_alternative(html_content,'text/html')
     msg.send()
