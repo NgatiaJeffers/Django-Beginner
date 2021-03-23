@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
 import datetime as dt
-from .models import Article
+from .forms import NewsLetterForm
+from .email import send_welcome_email
+from .models import Article, NewsLetter
+from django.shortcuts import render, redirect
+from django.http.response import HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 
 # Create your views here.
 def news_of_day(request):
@@ -21,15 +24,28 @@ def past_days_news(request, past_date):
         assert False
 
     if date == dt.date.today():
-        return redirect(news_of_day)
+        return redirect(news_today)
 
     news = Article.days_news(date)
     return render(request, "all-news/past-news.html", {"date": date, "news": news})
 
 def news_today(request):
     date = dt.date.today()
-    news = Article.today_news()
-    return render(request, 'all-news/today-news.html', {"date": date, "news": news})
+    news = Article.todays_news()
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            print('valid')
+            name = form.cleaned_date['your_name']
+            email = form.cleaned_date['email']
+            recipient = NewsLetter(name = name, email = email)
+            recipient.save()
+            send_welcome_email(name, email)
+
+            HttpResponseRedirect('news_today')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'all-news/today-news.html', {"date": date, "news": news, "letterForm": form})
 
 def search_results(request):
     if 'article' in request.GET and request.GET["article"]:
@@ -42,3 +58,10 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-news/search.html', {"message": message})
+
+def article(request, article_id):
+    try:
+        article = Article.objects.get(id = article_id)
+    except ValueError:
+        raise Http404()
+    return render(request, "all-news/article.html", {"article": article})

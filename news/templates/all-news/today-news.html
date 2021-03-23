@@ -1,4 +1,5 @@
 {%extends 'all-news/base.html'%}
+{% load bootstrap4 %}
 
 {% block content %}
 {{block.super}}
@@ -22,6 +23,16 @@
         <h2 class="breadcrumb text-class shadow-lg bg-white">There Is No News Items</h2>
     </div>
     {% endfor %}
+</div>
+
+<!-- Looping through news end -->
+<div class="container">
+    <form action="{% url 'newsToday' %}" method="post">
+        {%csrf_token%}
+
+        {% bootstrap_form letterForm layout='inline' %}
+        <input type="submit" value="Subscribe">
+    </form>
 </div>
 
 

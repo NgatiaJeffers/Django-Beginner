@@ -1,0 +1,4 @@
+Hello {{ name }}
+
+Welcome to the Moringa tribune newsletter you will find the most exciting newsletter
+about Moringa School
