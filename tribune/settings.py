@@ -32,15 +32,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap4',
-    'news.apps.NewsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'news',
+    'bootstrap4',
 ]
+
+# Login Configurations
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

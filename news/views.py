@@ -4,14 +4,33 @@ from .email import send_welcome_email
 from .models import Article, NewsLetter
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+
+# Trying new method
+def indexView(request):
+    return render(request, 'welcome.html')
+@login_required
+
+def dashboardView(request):
+    return render(request, 'dashboard.html')
+
+def registerView(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login_url')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {"form": form})
 
 # Create your views here.
 def news_of_day(request):
     date = dt.date.today()
-    articles = Article.objects.all().order_by('-pub_date')
     
-    return render(request, "all-news/today-news.html", {"date": date, "news": articles})
+    return render(request, "all-news/today-news.html", {"date": date})
 
 def past_days_news(request, past_date):
 

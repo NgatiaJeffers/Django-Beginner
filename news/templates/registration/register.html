@@ -1,0 +1,16 @@
+{%extends "registration/base.html"%}
+{% load static %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="row">
+        <h1 class="text-dark">Create New Account</h1>
+
+        <form method="POST">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
