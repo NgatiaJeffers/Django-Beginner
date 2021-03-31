@@ -1,18 +1,19 @@
 import datetime as dt
-from .forms import NewsLetterForm
+from .forms import NewsLetterForm, ArticleForm
 from .email import send_welcome_email
 from .models import Article, NewsLetter
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
-@login_required
 def index(request):
     articles = Article.objects.all().order_by("-pub_date")
 
     context = {
-        "article": articles
+        "articles": articles
     }
     return render(request, 'index.html', context)
 
@@ -75,3 +76,29 @@ def article(request, article_id):
     except ValueError:
         raise Http404()
     return render(request, "all-news/article.html", {"article": article})
+
+@login_required
+@csrf_protect
+def add_article(request):
+    form = ArticleForm(request.POST, request.FILES)
+    if request.method == "POST":
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = Article(
+                image = form.cleaned_data["image"],
+                title = form.cleaned_data["title"],
+                post = form.cleaned_data["new_article"],
+                editor = request.user
+            )
+
+            post.save()
+            print(post)
+
+            post_name = form.cleaned_data.get("title")
+            messages.success(request, f'Post created {post_name} !')
+            return redirect("home")
+
+    else:
+        form = ArticleForm()
+
+    return render(request, "all-news/article.html", {"form": form})

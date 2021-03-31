@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    New Article
+{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row py-5 px-4">
+        <div class="col-md-8 mx-auto">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 py-3">
+                    <h5 class="mb-0">Write an Article</h5>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <form class="form-validate" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group card-body">
+                                {{ form|crispy }}
+                            </div>
+                        
+                            <div class="mt-5">
+                                <button type="submit" class="btn btn-primary btn-icon-text"> Post Article </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

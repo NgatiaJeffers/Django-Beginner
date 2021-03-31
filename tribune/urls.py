@@ -21,6 +21,7 @@ from users import views as uv
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("home", include("news.urls"), name = "article"),
+    path("profile/", uv.profile, name = "profile"),
     path("register/", uv.register, name = "register"),
     path("", av.LoginView.as_view(template_name = "registration/login.html"), name = "login"),
     path("logout/", av.LogoutView.as_view(template_name = "registration/logout.html"), name = "logout"),
