@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Register Page
+{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center">
+        <div class="wrap d-flex justify-content-center shadow mt-3">
+            <span class="form-title">
+                <img src="{% static 'img/jefflogo.svg' %}" alt="IMG">
+            </span>
+
+            <form class="form-validate" method="POST">
+                {% csrf_token %}
+                <div class="form-group mt-5">
+                    {{ form|crispy }}
+                </div>
+
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-warning btn-icon-text"> SIGN UP </button>
+                </div>
+
+                <div class="pt-5">
+                    <span>Already have an account? <a href="{% url 'login' %}">Sign In</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+.wrap {
+    width: 800px;
+    background-color: #FFF;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 77px 55px 33px 55px;
+}
+
+.form-title {
+    width: 316px;
+}
+
+.form-title img {
+    max-width: 100%;
+}
+    </style>
+{% endblock %}

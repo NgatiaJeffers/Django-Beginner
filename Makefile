@@ -1,11 +1,17 @@
-Server:
+serve:
 	python3 manage.py runserver
 
-Check:
-	python3 manage.py check
-
-Make:
+migrations:
 	python3 manage.py makemigrations
 
-Migrate:
+migrate:
 	python3 manage.py migrate
+
+shell:
+	python manage.py shell
+
+admin:
+	python manage.py createsuperuser
+	
+test:
+	coverage run manage.py test && coverage html

@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'news',
+    'users',
     'bootstrap4',
+    'crispy_forms',
 ]
 
-# Login Configurations
-LOGIN_REDIRECT_URL = '/dashboard/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,3 +141,8 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Login Configurations
+LOGIN_REDIRECT_URL = 'newsToday/'
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"

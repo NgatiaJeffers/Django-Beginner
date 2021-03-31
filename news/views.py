@@ -2,31 +2,19 @@ import datetime as dt
 from .forms import NewsLetterForm
 from .email import send_welcome_email
 from .models import Article, NewsLetter
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 
-# Trying new method
+# Create your views here.
 def indexView(request):
     return render(request, 'welcome.html')
+
 @login_required
-
-def dashboardView(request):
-    return render(request, 'dashboard.html')
-
-def registerView(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login_url')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {"form": form})
-
-# Create your views here.
 def news_of_day(request):
     date = dt.date.today()
     
@@ -49,6 +37,7 @@ def past_days_news(request, past_date):
     news = Article.days_news(date)
     return render(request, "all-news/past-news.html", {"date": date, "news": news})
 
+@login_required
 def news_today(request):
     date = dt.date.today()
     news = Article.todays_news()
@@ -69,6 +58,7 @@ def news_today(request):
         form = NewsLetterForm()
     return render(request, 'all-news/today-news.html', {"date": date, "news": news, "form": form})
 
+@login_required
 def search_results(request):
     if 'article' in request.GET and request.GET["article"]:
         search_term = request.GET.get("article")
@@ -81,6 +71,7 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-news/search.html', {"message": message})
 
+@login_required
 def article(request, article_id):
     try:
         article = Article.objects.get(id = article_id)
