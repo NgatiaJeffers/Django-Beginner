@@ -22,15 +22,13 @@
 <body>
     {% include "navbar.html" %}
     
-    {% block content %}
     <div class="container d-flex justify-content-center">
-        <div class="row">
-            <h1 class="text-center">News for {{ date|date:"l d-F Y"}}</h1>
-        </div>
+    {% block content %}
+    
+    {% endblock %}
     </div>
 
-    {% endblock %}
-
+    
     {% block script %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         {% bootstrap_javascript %}

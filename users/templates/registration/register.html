@@ -7,27 +7,25 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container d-flex justify-content-center">
-        <div class="wrap d-flex justify-content-center shadow mt-3">
-            <span class="form-title">
-                <img src="{% static 'img/jefflogo.svg' %}" alt="IMG">
-            </span>
+    <div class="wrap d-flex justify-content-center shadow mt-3">
+        <span class="form-title">
+            <img src="{% static 'img/jefflogo.svg' %}" alt="IMG">
+        </span>
 
-            <form class="form-validate" method="POST">
-                {% csrf_token %}
-                <div class="form-group mt-5">
-                    {{ form|crispy }}
-                </div>
+        <form class="form-validate" method="POST">
+            {% csrf_token %}
+            <div class="form-group mt-5">
+                {{ form|crispy }}
+            </div>
 
-                <div class="mt-5">
-                    <button type="submit" class="btn btn-warning btn-icon-text"> SIGN UP </button>
-                </div>
+            <div class="mt-5">
+                <button type="submit" class="btn btn-warning btn-icon-text"> SIGN UP </button>
+            </div>
 
-                <div class="pt-5">
-                    <span>Already have an account? <a href="{% url 'login' %}">Sign In</a></span>
-                </div>
-            </form>
-        </div>
+            <div class="pt-5">
+                <span>Already have an account? <a href="{% url 'login' %}">Sign In</a></span>
+            </div>
+        </form>
     </div>
 
     <style>

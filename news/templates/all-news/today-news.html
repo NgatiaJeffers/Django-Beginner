@@ -1,4 +1,4 @@
-{%extends 'all-news/base.html'%}
+{%extends 'base.html'%}
 {% load bootstrap4 %}
 
 {% block content %}
@@ -27,7 +27,7 @@
 
 <!-- Looping through news end -->
 <div class="container d-flex justify-content-center mt-5">
-    <form action="{% url 'newsToday' %}" method="post">
+    <form action="{% url 'article' %}" method="post">
         {%csrf_token%}
 
         {% for field in form %}

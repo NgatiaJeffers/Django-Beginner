@@ -2,24 +2,42 @@ import datetime as dt
 from .forms import NewsLetterForm
 from .email import send_welcome_email
 from .models import Article, NewsLetter
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.http.response import HttpResponseRedirect
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import Http404
 
 # Create your views here.
-def indexView(request):
-    return render(request, 'welcome.html')
+@login_required
+def index(request):
+    articles = Article.objects.all().order_by("-pub_date")
+
+    context = {
+        "article": articles
+    }
+    return render(request, 'index.html', context)
 
 @login_required
-def news_of_day(request):
+def news_today(request):
     date = dt.date.today()
-    
-    return render(request, "all-news/today-news.html", {"date": date})
+    news = Article.todays_news()
+    if request.method == 'POST':
+        form = NewsLetterForm(data=request.POST)
+        if form.is_valid():
+            print('valid')
+            name = form.cleaned_date['name']
+            email = form.cleaned_date['email']
+            recipient = NewsLetter(name = name, email = email)
+            recipient.save()
+            send_welcome_email(name, email)
 
+            return redirect('news_today')
+        else:
+            print('Error loading the data!')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'all-news/today-news.html', {"date": date, "news": news, "form": form})
+
+@login_required
 def past_days_news(request, past_date):
 
     try:
@@ -36,27 +54,6 @@ def past_days_news(request, past_date):
 
     news = Article.days_news(date)
     return render(request, "all-news/past-news.html", {"date": date, "news": news})
-
-@login_required
-def news_today(request):
-    date = dt.date.today()
-    news = Article.todays_news()
-    if request.method == 'POST':
-        form = NewsLetterForm(data=request.POST)
-        if form.is_valid():
-            print('valid')
-            name = form.cleaned_date['name']
-            email = form.cleaned_date['email']
-            recipient = NewsLetter(name = name, email = email)
-            recipient.save()
-            send_welcome_email(name, email)
-
-            HttpResponseRedirect('news_today')
-        else:
-            print('Error loading the data!')
-    else:
-        form = NewsLetterForm()
-    return render(request, 'all-news/today-news.html', {"date": date, "news": news, "form": form})
 
 @login_required
 def search_results(request):

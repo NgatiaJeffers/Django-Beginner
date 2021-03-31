@@ -7,51 +7,24 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container d-flex justify-content-center">
-        <div class="wrap shadow mt-5">
-            <span class="form-title">
-                <img src="{% static 'img/jefflogo.svg' %}" alt="IMG">
-            </span>
+    <div class="wrap shadow mt-5">
+        <span class="form-title">
+            <img src="{% static 'img/jefflogo.svg' %}" alt="IMG">
+        </span>
 
-            <form class="form-validate" method="POST">
-                {% csrf_token %}
-                <div class="form-group mt-5">
-                    {{ form|crispy }}
-                </div>
+        <form class="form-validate" method="POST">
+            {% csrf_token %}
+            <div class="form-group mt-5">
+                {{ form|crispy }}
+            </div>
 
-                <div class="mt-5">
-                    <button type="submit" id="animatebutton" class="btn btn-warning btn-icon-text animatebutton"> LOG IN </button>
-                </div>
+            <div class="mt-5">
+                <button type="submit" id="animatebutton" class="btn btn-warning btn-icon-text animatebutton"> LOG IN </button>
+            </div>
 
-                <div class="pt-5">
-                    <span>Don't have an account? Create one <a href="{% url 'register' %}">here</a></span>
-                </div>
-            </form>
-        </div>
+            <div class="pt-5">
+                <span>Don't have an account? Create one <a href="{% url 'register' %}">here</a></span>
+            </div>
+        </form>
     </div>
-
-    <style>
-.wrap {
-    width: 390px;
-    background-color: #FFF;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 77px 55px 33px 55px;
-}
-
-.form-title {
-    width: 316px;
-}
-
-.form-title img {
-    max-width: 100%;
-}
-
-/* .form-validate {
-    width: 290px;
-} */
-    </style>
 {% endblock %}

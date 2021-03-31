@@ -1,32 +1,80 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Gotham Rounded, sans-serif;
-    background-color: #F2E9EB;
-    color: #31383F;
+  font-family: Gotham Rounded, sans-serif;
+  background-color: #F2E9EB;
+  color: #31383F;
 }
 
 .navbar {
-    background-color: #fff !important;
-    color: #31383F;
+  background-color: #fff !important;
+  color: #31383F;
 }
 
 .navbar-brand {
-    color: #DD8EA4;
+  color: #DD8EA4;
 }
 
 h1 {
-    color: #DD8EA4;
+  color: #DD8EA4;
 }
 
 .breadcrumb {
-    padding: 15px;
-    font-size: 15px;
-    color: #31383f !important;
-    letter-spacing: 1px;
-    border-radius: 8px !important
+  padding: 15px;
+  font-size: 15px;
+  color: #31383f !important;
+  letter-spacing: 1px;
+  border-radius: 8px !important
+}
+
+/* CARDS */
+
+h1 {
+  color: #fff;
+  padding: 10px 0;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: none;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
+}
+
+.card a {
+  color: initial;
+}
+
+.card a:hover {
+  text-decoration: initial;
+}
+
+.card .text-muted i {
+  margin: 0 10px;
+}
+
+.wrap {
+  width: 390px;
+  background-color: #FFF;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 77px 55px 33px 55px;
+}
+
+.form-title {
+  width: 316px;
+}
+
+.form-title img {
+  max-width: 100%;
 }
