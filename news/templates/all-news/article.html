@@ -1,19 +1,30 @@
 {% extends 'base.html' %}
-    {% block content %}
-    <div class="container">
-        <div class="row">
-            <img src="{{ article.article_image.url }}" class="img-responsive" alt="">
-        </div>
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <div class="row">
-            <h2 class="text-center">{{ article.title }}</h2>
-        </div>
-
-        <div class="row">
-            <p>{{ article.post }}</p>
-        </div>
-        <div class="row">
-            <p>Posted {{ article.pub_date|timesince }} by {{ article.editor }}</p>
+<div class="container mt-5">
+    <div class="card-columns">
+        <div class="card mt-5">
+            <a href="#">
+                <img class="card-img-top"
+                    src="{{ article.image.url }}"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text">
+                        {{ article.post | truncatechars:150 }}
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="fa fa-user"></i>
+                            {{ article.editor.first_name }}
+                            <i class="fa fa-calendar"></i>
+                            {{ article.published|timesince }}
+                        </small>
+                    </p>
+                </div>
+            </a>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

@@ -3,6 +3,68 @@
 
 {% block content %}
 {{block.super}}
+<div class="container">
+    <div class="row">
+        <div class="card-columns">
+            {% for news_item in news %}
+            <h2 class="breadcrumb text-class text-center shadow-lg bg-white">{{ news_item.title }}</h2>
+            <div class="card mt-5">
+                <a href="#">
+                    <img class="card-img-top"
+                        src="{{ news_item.article_image.url }}"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ news_item.title }}</h5>
+                        <p class="card-text">
+                            {{ news_item.post | truncatechars:150 }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="fa fa-eye"></i>
+                                {{ news_item.tags }}
+                                <i class="fa fa-user"></i>
+                                {{ news_item.editor }}
+                                <i class="fa fa-calendar"></i>
+                                {{ news_item.published }}
+                            </small>
+                        </p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% empty %}
+        <div class="row">
+            <h2 class="breadcrumb text-class shadow-lg bg-white">There Is No News Items</h2>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+<!-- Looping through news end -->
+<div class="container d-flex justify-content-center mt-5">
+    <form action="{% url 'article' %}" method="post">
+        {%csrf_token%}
+
+        {% for field in form %}
+            {% bootstrap_field field %}
+        {% endfor %}
+        <input class="btn" type="submit" value="Subscribe">
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{block.supre}}
+<script type="text/javascript" src="{% static 'js/newsletter.js' %}"></script>
+{% endblock %}
+
+
+
 
 <div class="container d-flex justify-content-center">
     <!-- Looping through news -->
@@ -24,18 +86,3 @@
     </div>
     {% endfor %}
 </div>
-
-<!-- Looping through news end -->
-<div class="container d-flex justify-content-center mt-5">
-    <form action="{% url 'article' %}" method="post">
-        {%csrf_token%}
-
-        {% for field in form %}
-            {% bootstrap_field field %}
-        {% endfor %}
-        <input class="btn" type="submit" value="Subscribe">
-    </form>
-</div>
-
-
-{% endblock %}

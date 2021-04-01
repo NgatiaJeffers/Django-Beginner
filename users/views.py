@@ -25,7 +25,7 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "registration/register.html", {"form":form})
+    return render(request, "django_registration/register.html", {"form":form})
 
 @login_required
 @csrf_protect

@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="container mt-5">
     <div class="card-columns">
         {% for article in articles %}
@@ -13,10 +15,17 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ article.title }}</h5>
                     <p class="card-text">
-                        {{ post }}
+                        {{ article.post | truncatechars:150 }}
                     </p>
-                    <p class="card-text"><small class="text-muted"><i class="fas fa-eye"></i>{{ article.tags }}<i
-                                class="far fa-user"></i>{{ article.editor }}<i class="fas fa-calendar-alt"></i>{{ article.pub_date }}</small>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="fa fa-eye"></i>
+                            {{ article.tags }}
+                            <i class="fa fa-user"></i>
+                            {{ article.editor }}
+                            <i class="fa fa-calendar"></i>
+                            {{ article.published }}
+                        </small>
                     </p>
                 </div>
             </a>

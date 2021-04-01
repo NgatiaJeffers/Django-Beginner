@@ -1,16 +1,19 @@
 import datetime as dt
+
+from django.http.response import JsonResponse
 from .forms import NewsLetterForm, ArticleForm
 from .email import send_welcome_email
 from .models import Article, NewsLetter
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
-    articles = Article.objects.all().order_by("-pub_date")
+    articles = Article.objects.all().order_by("-published")
 
     context = {
         "articles": articles
@@ -21,17 +24,18 @@ def index(request):
 def news_today(request):
     date = dt.date.today()
     news = Article.todays_news()
+    form = NewsLetter()
     if request.method == 'POST':
         form = NewsLetterForm(data=request.POST)
         if form.is_valid():
             print('valid')
-            name = form.cleaned_date['name']
+            name = form.cleaned_date['your_name']
             email = form.cleaned_date['email']
             recipient = NewsLetter(name = name, email = email)
             recipient.save()
             send_welcome_email(name, email)
 
-            return redirect('news_today')
+            HttpResponseRedirect('news_today')
         else:
             print('Error loading the data!')
     else:
@@ -69,7 +73,7 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-news/search.html', {"message": message})
 
-@login_required
+@login_required(login_url='accounts/login/')
 def article(request, article_id):
     try:
         article = Article.objects.get(id = article_id)
@@ -102,3 +106,13 @@ def add_article(request):
         form = ArticleForm()
 
     return render(request, "all-news/article.html", {"form": form})
+
+def newsletter(request):
+    name = request.POST.get('your_name')
+    email = request.POST.get('email')
+
+    recipient = NewsLetter(name = name, email = email)
+    recipient.save()
+    send_welcome_email(name, email)
+    data = {'success': 'You have been successfully aded to mailing list'}
+    return JsonResponse(data)

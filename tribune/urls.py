@@ -20,9 +20,12 @@ from users import views as uv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("home", include("news.urls"), name = "article"),
-    path("profile/", uv.profile, name = "profile"),
-    path("register/", uv.register, name = "register"),
-    path("", av.LoginView.as_view(template_name = "registration/login.html"), name = "login"),
-    path("logout/", av.LogoutView.as_view(template_name = "registration/logout.html"), name = "logout"),
+    path("", include("news.urls")),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    # path('logout/', uv.logout, {"next_page": '/'}),
+    # path("profile/", uv.profile, name = "profile"),
+    # path("register/", uv.register, name = "register"),
+    # path("", av.LoginView.as_view(template_name = "django_registration/login.html"), name = "login"),
+    # path("logout/", av.LogoutView.as_view(template_name = "django_registration/logout.html"), name = "logout"),
 ]

@@ -4,7 +4,7 @@
 <navbar class="navbar navbar-expand-lg navbar-dark bg-primary shadow fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand text-dark" href="{% url 'article' %}">The Moringa Trinbune</a>
+            <a class="navbar-brand text-dark" href="{% url 'newsToday' %}">The Moringa Trinbune</a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,19 +13,30 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-dark" href="{% url 'logout' %}">Sign Out</a>
+                    <a class="nav-link text-dark" href="#">Sign Out</a>
                 </li>
 
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'profile' %}">
+                    <a class="nav-link" href="#">
                         <img src="{% static 'img/p.png' %}" alt="" width="30" height="30">
                     </a>
                 </li>
 
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'add_article' %}">
+                    <a class="nav-link" href="#">
                         <img src="{% static 'img/add.png' %}" alt="" width="30" height="30">
                     </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'newsToday' %}">Home</a>
+                        <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    </div>
                 </li>
             </ul>
             <form class="form-inline" role="search" action="{% url 'search_results' %}">
@@ -39,4 +50,14 @@
     </div>
 </navbar>
 {% else %}
+<div class="container">
+    <div class="row">
+        <div class="bg-white text-center rounded shadow-sm py-5 px-4 mt-5">
+            <h5 class="mb-0">Sorry You Logged Out.</h5>
+            <a href="/accounts/login">
+                <span class="small text-uppercase text-muted">Click to Login</span>
+            </a>
+        </div>
+    </div>
+</div>
 {% endif %}

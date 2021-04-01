@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block title %}
     LoginPage
 {% endblock %}
-{% load crispy_forms_tags %}
 
 {% block content %}
     <div class="wrap shadow mt-5">
@@ -12,18 +12,19 @@
             <img src="{% static 'img/jefflogo.svg' %}" alt="IMG">
         </span>
 
-        <form class="form-validate" method="POST">
-            {% csrf_token %}
+        <form class="form-validate" method="POST" action="/accounts/login/">
             <div class="form-group mt-5">
-                {{ form|crispy }}
+                {% csrf_token %}
+                {% bootstrap_form form%}
             </div>
 
             <div class="mt-5">
                 <button type="submit" id="animatebutton" class="btn btn-warning btn-icon-text animatebutton"> LOG IN </button>
             </div>
 
+            <input type="hidden" name="next" value="{{next}}">
             <div class="pt-5">
-                <span>Don't have an account? Create one <a href="{% url 'register' %}">here</a></span>
+                <span>Don't have an account? Create one <a href="#">here</a></span>
             </div>
         </form>
     </div>
