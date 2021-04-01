@@ -1,7 +1,7 @@
 import datetime as dt
 
 from django.http.response import JsonResponse
-from .forms import NewsLetterForm, ArticleForm
+from .forms import NewsLetterForm, NewArticleForm
 from .email import send_welcome_email
 from .models import Article, NewsLetter
 from django.contrib import messages
@@ -81,31 +81,21 @@ def article(request, article_id):
         raise Http404()
     return render(request, "all-news/article.html", {"article": article})
 
-@login_required
-@csrf_protect
-def add_article(request):
-    form = ArticleForm(request.POST, request.FILES)
+@login_required(login_url="/accounts/login/")
+def new_article(request):
+    current_user = request.user
     if request.method == "POST":
-        form = ArticleForm(request.POST, request.FILES)
+        form = NewArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            post = Article(
-                image = form.cleaned_data["image"],
-                title = form.cleaned_data["title"],
-                post = form.cleaned_data["new_article"],
-                editor = request.user
-            )
-
-            post.save()
-            print(post)
-
-            post_name = form.cleaned_data.get("title")
-            messages.success(request, f'Post created {post_name} !')
-            return redirect("home")
+            article = form.save(commit = False)
+            article.editor = current_user
+            
+            article.save()
+        return redirect("NewsToday")
 
     else:
-        form = ArticleForm()
-
-    return render(request, "all-news/article.html", {"form": form})
+        form = NewArticleForm()
+    return render(request, "all-news/new_article.html", {"form": form})
 
 def newsletter(request):
     name = request.POST.get('your_name')

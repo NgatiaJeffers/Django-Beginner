@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'bootstrap4',
     'django_registration',
+    'tinymce',
 ]
 
 

@@ -31,7 +31,6 @@
                     </div>
                 </a>
             </div>
-            {% endfor %}
         </div>
         {% empty %}
         <div class="row">
@@ -45,7 +44,7 @@
 
 <!-- Looping through news end -->
 <div class="container d-flex justify-content-center mt-5">
-    <form action="{% url 'article' %}" method="post">
+    <form action="{% url 'newsToday' %}" method="post">
         {%csrf_token%}
 
         {% for field in form %}
@@ -56,11 +55,12 @@
 </div>
 
 
-{% endblock %}
+
 
 {% block scripts %}
-{{block.supre}}
+{{ block.super }}
 <script type="text/javascript" src="{% static 'js/newsletter.js' %}"></script>
+{% endblock %}
 {% endblock %}
 
 
