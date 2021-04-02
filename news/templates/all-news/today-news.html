@@ -1,16 +1,16 @@
 {%extends 'base.html'%}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="card-columns">
             {% for news_item in news %}
-            <h2 class="breadcrumb text-class text-center shadow-lg bg-white">{{ news_item.title }}</h2>
             <div class="card mt-5">
                 <a href="#">
                     <img class="card-img-top"
-                        src="{{ news_item.article_image.url }}"
+                        src="{{ news_item.image.url }}"
                         alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ news_item.title }}</h5>
@@ -41,47 +41,37 @@
 
 
 
+
 <!-- Looping through news end -->
-<div class="container d-flex justify-content-center mt-5">
-    <form action="{% url 'newsToday' %}" method="post">
-        {%csrf_token%}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="wrap shadow mt-5">
+            <span class="form-title text-center">
+                Subscribe to our <br>
+                Newsletter
+            </span>n>
+            <form class="form-validate" method="POST" action="{% url 'newsToday' %}">
+                <div class="form-group mt-5">
+                    {%csrf_token%}
 
-        {% for field in form %}
-            {% bootstrap_field field %}
-        {% endfor %}
-        <input class="btn" type="submit" value="Subscribe">
-    </form>
+                    {% for field in form %}
+                        {% bootstrap_field field %}
+                    {% endfor %}
+                </div>
+    
+                <div class="mt-5">
+                    <button type="submit" id="animatebutton" class="btn btn-warning btn-icon-text animatebutton"> Subscribe </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
 
 {% endblock %}
 
-{% block scripts %}
-{{ block.super }}
+{% block javascript %}
     <script type="text/javascript" src="{% static 'js/newsletter.js' %}"></script>
-{% endblock %}
+{% endblock javascript %}
 
 
-
-
-
-<div class="container d-flex justify-content-center">
-    <!-- Looping through news -->
-    {% for news_item in news %}
-    <div class="row">
-        <!-- Displayng news articles -->
-        <div class="col-md-6">
-            <h2 class="breadcrumb text-class shadow-lg bg-white">{{ news_item.title }}</h2>
-        </div>
-
-        <!-- Display news Articles Image -->
-        <div class="col-md-6">
-            <img src="{{ news_item.article_image.url }}" class="img-responsive" alt="Code">
-        </div>
-    </div>
-    {% empty %}
-    <div class="row">
-        <h2 class="breadcrumb text-class shadow-lg bg-white">There Is No News Items</h2>
-    </div>
-    {% endfor %}
-</div>
+<h2 class="breadcrumb text-class text-center shadow-lg bg-white">{{ news_item.title }}</h2>

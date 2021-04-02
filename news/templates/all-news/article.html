@@ -12,11 +12,14 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ article.title }}</h5>
                     <p class="card-text">
-                        {{ article.post | truncatechars:150 }}
+                        {% autoescape on %}
+                            {{ article.post | truncatechars:150 }}
+                        {% endautoescape %}
                     </p>
                     <p class="card-text">
                         <small class="text-muted">
                             <i class="fa fa-user"></i>
+                            by
                             {{ article.editor.first_name }}
                             <i class="fa fa-calendar"></i>
                             {{ article.published|timesince }}

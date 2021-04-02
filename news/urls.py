@@ -10,7 +10,8 @@ urlpatterns = [
     path('search/', views.search_results, name = 'search_results'),
     path('archives/<int:year>/<int:month>/<int:day>/', views.past_days_news, name = 'pastNews'),
     path('ajax/newsletter/', views.newsletter, name = 'newsletter'),
-    path('new/article', views.new_article, name = "new-article")
+    path('new/article', views.new_article, name = "new-article"),
+    path('api/merch/', views.MerchList.as_view())
 ]
 
 if settings.DEBUG:

@@ -10,6 +10,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .models import MoringaMerch
+from .serializer import MerchSerializer
+from news import serializer
 
 # Create your views here.
 def index(request):
@@ -29,7 +35,7 @@ def news_today(request):
         form = NewsLetterForm(data=request.POST)
         if form.is_valid():
             print('valid')
-            name = form.cleaned_date['your_name']
+            name = form.cleaned_date['name']
             email = form.cleaned_date['email']
             recipient = NewsLetter(name = name, email = email)
             recipient.save()
@@ -91,14 +97,14 @@ def new_article(request):
             article.editor = current_user
             
             article.save()
-        return redirect("NewsToday")
+        return redirect("newsToday")
 
     else:
         form = NewArticleForm()
     return render(request, "new_article.html", {"form": form})
 
 def newsletter(request):
-    name = request.POST.get('your_name')
+    name = request.POST.get('name')
     email = request.POST.get('email')
 
     recipient = NewsLetter(name = name, email = email)
@@ -106,3 +112,16 @@ def newsletter(request):
     send_welcome_email(name, email)
     data = {'success': 'You have been successfully aded to mailing list'}
     return JsonResponse(data)
+
+class MerchList(APIView):
+    def get(self, request, format = None):
+        all_merch = MoringaMerch.objects.all()
+        serializers = MerchSerializer(all_merch, many = True)
+        return Response(serializers.data)
+
+    def post(self, request, format=None):
+        serializers = MerchSerializer(data = request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status = status.HTTP_201_CREATED)
+        return Response(serializers.errors, status = status.HTTP_400_REQUEST)

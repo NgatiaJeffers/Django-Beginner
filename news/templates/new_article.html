@@ -27,7 +27,8 @@
                         <form class="form-validate" method="POST" action="{% url 'new-article' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group card-body">
-                                {{ form|crispy }}
+                                {% bootstrap_form form %}
+                                
                             </div>
                         
                             <div class="mt-5">
@@ -40,5 +41,10 @@
         </div>
     </div>
 </div>
+
+{% block script %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {% bootstrap_javascript %}
+    {% endblock %}
 </body>
 </html>
