@@ -6,11 +6,11 @@ from . import views
 urlpatterns = [
     path('', views.index, name = 'article'),
     path("newToday/", views.news_today, name = "newsToday"),
-    path("new_article/", views.add_article, name = "add_article"),
     path('article/<int:article_id>/', views.article, name = 'article'),
     path('search/', views.search_results, name = 'search_results'),
     path('archives/<int:year>/<int:month>/<int:day>/', views.past_days_news, name = 'pastNews'),
     path('ajax/newsletter/', views.newsletter, name = 'newsletter'),
+    path('new/article', views.new_article, name = "new-article")
 ]
 
 if settings.DEBUG:

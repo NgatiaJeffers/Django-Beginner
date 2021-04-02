@@ -95,7 +95,7 @@ def new_article(request):
 
     else:
         form = NewArticleForm()
-    return render(request, "all-news/new_article.html", {"form": form})
+    return render(request, "new_article.html", {"form": form})
 
 def newsletter(request):
     name = request.POST.get('your_name')
